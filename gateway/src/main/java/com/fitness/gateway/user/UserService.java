@@ -40,5 +40,15 @@ public class UserService {
 
     public Mono<UserResponse> registerUser(RegisterRequest registerRequest) {
         log.info("calling user registration API");
+        return userServiceWebClient.post()
+                .uri("/api/users/register")
+                .bodyValue(registerRequest)
+                .retrieve()
+                .bodyToMono(UserResponse.class)
+                .onErrorResume(WebClientResponseException.class, e -> {
+                     if (e.getStatusCode() == HttpStatus.BAD_REQUEST)
+                        return Mono.error(new RuntimeException("Bad Request"));
+                     return Mono.error(new RuntimeException("Unexpected error"));
+                });
     }
 }

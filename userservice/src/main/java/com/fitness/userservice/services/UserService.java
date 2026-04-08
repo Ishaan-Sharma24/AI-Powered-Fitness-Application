@@ -34,6 +34,7 @@ public class UserService {
         User user=new User();
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
+        user.setKeycloakId(request.getKeycloakId());
         user.setLastName(request.getLastName());
         user.setPassword(request.getPassword());
 
@@ -43,6 +44,7 @@ public class UserService {
 
         response.setEmail(savedUser.getEmail());
         response.setFirstName(savedUser.getFirstName());
+        response.setKeycloakId(savedUser.getKeycloakId());
         response.setLastName(savedUser.getLastName());
         response.setPassword(savedUser.getPassword());
         response.setCreatedAt(savedUser.getCreatedAt());
@@ -72,6 +74,6 @@ public class UserService {
 
     public Boolean existByUserId(String userId) {
         log.info("calling user Service for {}",userId);
-        return repository.existsBykeycloakId(userId);
+        return repository.existsByKeycloakId(userId);
     }
 }
