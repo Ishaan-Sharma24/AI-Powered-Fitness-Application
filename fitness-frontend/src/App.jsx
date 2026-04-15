@@ -12,7 +12,7 @@ import ActivityDetails from './components/ActivityDetails';
 const ActivitiesPage=()=>{
   return(
     <Box  sx={{ p: 2, border: '1px dashed grey' }}>
-    <ActivityForm/>
+    <ActivityForm onActivityAdded ={()=>{window.location.reload()}}/>
     <ActivityList/>
   </Box>
   );

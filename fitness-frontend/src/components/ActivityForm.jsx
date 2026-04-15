@@ -10,6 +10,7 @@ import {
     Paper
   } from '@mui/material';
   import React, { useState } from 'react';
+import { addActivity } from '../services/api';
   
   const ActivityForm = ({onActivityAdded}) => {
     const [activity, setActivity] = useState({
@@ -21,7 +22,7 @@ import {
     const handleSubmit = async(e)=>{
         e.preventDefault();
         try {
-            //await addActivity(activity);
+            await addActivity(activity);
             onActivityAdded();
             setActivity({
                 type: "RUNNING",
