@@ -8,7 +8,7 @@ import { setCredentials } from './store/authSlice';
 import { AuthContext } from 'react-oauth2-code-pkce';
 import ActivityForm from './components/ActivityForm';
 import ActivityList from './components/ActivityList';
-import ActivityDetails from './components/ActivityDetails';
+import ActivityDetail from './components/ActivityDetails';
 const ActivitiesPage=()=>{
   return(
     <Box  sx={{ p: 2, border: '1px dashed grey' }}>
@@ -42,7 +42,7 @@ useEffect(()=>{
           </Button>
           <Routes>
           <Route path ="/activities" element={<ActivitiesPage/>}/>
-          <Route path ="/activities/:id" element={<ActivityDetails/>}/>
+          <Route path ="/activities/:id" element={<ActivityDetail/>}/>
           <Route path ="/" element={token? <Navigate to="/activities"replace/>:
                                 <div> Welcome! Please Login</div>}/>
           </Routes>
