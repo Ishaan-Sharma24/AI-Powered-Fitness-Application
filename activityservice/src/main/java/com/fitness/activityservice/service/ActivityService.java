@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
@@ -55,6 +58,29 @@ public class ActivityService {
         response.setCreatedAt(activity.getCreatedAt());
         response.setUpdatedAt(activity.getUpdatedAt());
         return response;
+
+    }
+
+    public List<ActivityResponse> getUserActivity(String userId) {
+
+        List<Activity> activityList= activityRepository.findByUserId(userId);
+        List<ActivityResponse> responseList=new ArrayList<>();
+        for(Activity activity: activityList){
+            ActivityResponse response= new ActivityResponse();
+            response.setId(activity.getId());
+            response.setUserId(activity.getUserId());
+            response.setType(activity.getType());
+            response.setDuration(activity.getDuration());
+            response.setCaloriesBurned(activity.getCaloriesBurned());
+            response.setStartTime(activity.getStartTime());
+            response.setAdditionalMetrics(activity.getAdditionalMetrics());
+            response.setCreatedAt(activity.getCreatedAt());
+            response.setUpdatedAt(activity.getUpdatedAt());
+            responseList.add(response);
+
+        }
+        return responseList;
+
 
     }
 }

@@ -14,8 +14,8 @@ kafka:
     name: activity-events
 gemini:
   api:
-    url: ${GEMINI_URL}
-    key: ${GEMINI_KEY}
+    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
+    key: AIzaSyCK-JieYcPxJON9vYhTira0bvMu-2m-bAo
 
 mongodb:
   uri: mongodb://localhost:27017/airecommendationfitness

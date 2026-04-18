@@ -27,28 +27,28 @@ public class KeyCloakUserSyncFilter implements WebFilter {
     private final UserService userService;
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        String userId=exchange.getRequest().getHeaders().getFirst("X-User-ID");
+        //String userId=exchange.getRequest().getHeaders().getFirst("X-User-ID");
         String token= exchange.getRequest().getHeaders().getFirst("Authorization");
         RegisterRequest registerRequest= getUserDetails(token);
-        if(userId==null){
-            userId=registerRequest.getKeycloakId();
-        }
+        log.info("Token: {}", token);
+        log.info("RegisterRequest: {}", registerRequest);
+        String userId=registerRequest.getKeycloakId();
+        log.info("UserId: {}", userId);
+
         if(userId!=null && token!=null){
             String finalUserId = userId;
             return userService.validateUser(userId)
                     .flatMap(exist->{
-                        if(!exist){
-                            if(registerRequest!=null){
+                        if (!exist) {
+                            if (registerRequest != null) {
                                 return userService.registerUser(registerRequest)
-                                        .then(Mono.empty());
+                                        .then(Mono.just(true)); // continue flow
+                            } else {
+                                return Mono.just(false);
                             }
-                            else{
-                                return Mono.empty();
-                            }
-                        }
-                        else{
+                        } else {
                             log.info("User already exists, skipping sync");
-                            return Mono.empty();
+                            return Mono.just(true);
                         }
                     })
                     .then(Mono.defer(()->{
